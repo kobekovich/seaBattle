@@ -1,0 +1,20 @@
+.square1:hover {
+    background-color: #ade6f5 !important;
+}
+
+.square {
+    width: 100%;
+    height: 50%;
+    padding-bottom: 100%;
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
+}
+.square1, .squareTop {
+    width: 9%;
+    height: 9%;
+    padding-bottom: 8.5%;
+    box-sizing: border-box;
+    background-size: cover;
+    background-position: center;
+}
