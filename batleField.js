@@ -95,8 +95,18 @@ function showShots(arr) { // shows shots field
                     ship.setAttribute('src', './img/ship.svg');
                     ship.className = 'img-fluid bg-warning border-3 border-warning rounded';
 
+                    for (let i=0; i<fieldArrayCoordinatesHelper.length; i++) {
+                        for (let j=0; j<fieldArrayCoordinatesHelper[i].length; j++) {
+                            if (fieldArrayCoordinatesHelper[i][j][0] === x && fieldArrayCoordinatesHelper[i][j][1] === y) {
+                                let element = document.querySelector('#' + CSS.escape(i) + '0' + CSS.escape(j));
+                                console.log(element);
+                                element.classList.add('bg-warning');
+                            }
+                        }
+                    }
                     for (let i=0; i<fieldArrayCoordinates.length; i++) {
                         for (let j=0; j<fieldArrayCoordinates[i].length; j++) {
+                            
                             if (fieldArrayCoordinates[i][j][0] === x && fieldArrayCoordinates[i][j][1] === y) {
                                 
                                 fieldArrayCoordinates[i].splice(j,1);
@@ -118,8 +128,11 @@ function showShots(arr) { // shows shots field
                                         console.log(fieldArrayCoordinatesHelper[i]);
                                         let element = document.querySelector('#' + CSS.escape(10*fieldArrayCoordinatesHelper[i][r][0]
                                             +fieldArrayCoordinatesHelper[i][r][1]) + ' img');
+                                        let elementPanel = document.querySelector('#' + CSS.escape(i) + '0' + CSS.escape(r));
                                         
-                                        element.className = 'img-fluid bg-danger border border-3 border-dark rounded';                                        
+                                        element.className = 'img-fluid bg-danger border border-3 border-dark rounded';
+                                        elementPanel.classList.add('bg-danger');  
+                                        elementPanel.classList.add('border-dark');                                       
                                     }
                                 }
                             } 
