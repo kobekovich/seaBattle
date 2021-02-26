@@ -1,4 +1,5 @@
 import { fieldArray, fieldArrayCoordinates, fieldArrayCoordClosest, fieldArrayCoordinatesHelper } from './ships.js';
+let startTimer;
 
 function createBatleField(range) { //first square creation
     let myFieldHere = document.querySelector('.square');
@@ -59,7 +60,7 @@ function showTime() { //game timer
     let minutes = 0;
     let seconds = 0;
 
-    setInterval(function showTime() {
+    startTimer = setInterval(function showTime() {
         if (seconds < 59) {
             seconds++;
             minutes = +minutes;
@@ -145,13 +146,21 @@ function showShots(arr) { // shows shots field
                 }
 
                 toGo--;
-                shots.innerHTML = toGo + '/' + total;
+
+                let arraysLen = fieldArrayCoordinates.reduce((sum, current) => sum + current.length, 0);
+
+                if (toGo === 0) { //stop timer logic on loose
+                    clearInterval(startTimer);
+                }
                 
-                //console.log(fieldArrayCoordinates);
-                //console.log(fieldArrayCoordClosest);
+                if (arraysLen === 0) { //stop timer logic on win
+                    clearInterval(startTimer);
+                }
+
+                shots.innerHTML = toGo + '/' + total;
             }  
-        } else {
-            // game over here
+        } else { //game over
+            
         }
     };
 };
