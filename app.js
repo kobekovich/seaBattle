@@ -1,5 +1,5 @@
 import { createBatleField, showPlayerName, showTime, displayShots } from './batleField.js';
-import { placeShip, fieldArray } from './ships.js';
+import { placeShip, fieldArray, fieldArrayCoordinates, fieldArrayCoordClosest, fieldArrayCoordinatesHelper } from './ships.js';
 
 function enableStart() {
     let inputElement = document.querySelector('#inlineFormInputGroupUsername');
@@ -29,6 +29,18 @@ function getStarted() {
     placeShip();
 };
 
+function playAgain() {
+    let firstDiv = document.body.firstElementChild;
+    let secondDiv = firstDiv.nextElementSibling;
+    let thirdDiv = secondDiv.nextElementSibling;
+
+    thirdDiv.classList.add('d-none');
+    firstDiv.classList.remove('d-none');
+    
+    document.location.reload();
+}
+
 document.querySelector('#inlineFormInputGroupUsername').addEventListener('keyup', enableStart);
 document.querySelector('#startGameButton').addEventListener('click', getStarted, { once : true }); //one time event
 document.querySelector('.square').addEventListener('click', displayShots);
+document.querySelector('#playAgainButton').addEventListener('click', playAgain);

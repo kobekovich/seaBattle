@@ -79,6 +79,7 @@ function showTime() { //game timer
 function showShots(arr) { // shows shots field
     let total = 30;
     let toGo = 30;
+    
     let shots = document.querySelector('#shotsHere');
     shots.innerHTML = '30/30';
 
@@ -148,23 +149,39 @@ function showShots(arr) { // shows shots field
                 toGo--;
 
                 let arraysLen = fieldArrayCoordinates.reduce((sum, current) => sum + current.length, 0);
-
-                if (toGo === 0) { //stop timer logic on loose
-                    clearInterval(startTimer);
+                let made = total - toGo;
+                console.log(made);
+                if (arraysLen === 0) { //win logic
+                    showResult(made);
                 }
-                
-                if (arraysLen === 0) { //stop timer logic on win
-                    clearInterval(startTimer);
+
+                if (toGo === 0) { //gameover logic
+                    showResult(made); 
                 }
 
                 shots.innerHTML = toGo + '/' + total;
             }  
-        } else { //game over
-            
         }
     };
 };
 
+function showResult(shots) {
+    clearInterval(startTimer);
+
+    let firstDiv = document.body.firstElementChild;
+    let secondDiv = firstDiv.nextElementSibling;
+    let thirdDiv = secondDiv.nextElementSibling;
+
+    secondDiv.classList.add('d-none');
+    thirdDiv.classList.remove('d-none');
+
+    if (shots === 30) {
+        document.querySelector('#winOrLose').innerHTML = 'Game Over';
+    } else {
+        document.querySelector('#winOrLose').innerHTML = 'You Won!';
+    }
+}
+
 let displayShots = showShots(fieldArray);
 
-export { createBatleField, showPlayerName, showTime, displayShots };
+export { createBatleField, showPlayerName, showTime, displayShots, showResult };
