@@ -1,5 +1,5 @@
 import { createBatleField, showPlayerName, showTime, displayShots } from './batleField.js';
-import { placeShip, fieldArray, fieldArrayCoordinates, fieldArrayCoordClosest, fieldArrayCoordinatesHelper } from './ships.js';
+import { placeShip } from './ships.js';
 
 function enableStart() {
     let inputElement = document.querySelector('#inlineFormInputGroupUsername');

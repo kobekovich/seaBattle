@@ -5,7 +5,7 @@ let fieldArrayCoordinatesHelper = [];
 
 function placeShip() {
     const shipArray = [[1,1,1,1],[1,1,1],[1,1,1],[1,1],[1,1],[1,1],[1],[1],[1],[1]];
-    const directionArray = [up,left];
+    const directionArray = [up,left]; // two possible directions
     let randomNumberFirstCell;
     let randomNumberDirection;
     let x;

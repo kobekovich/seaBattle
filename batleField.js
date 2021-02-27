@@ -79,6 +79,7 @@ function showTime() { //game timer
 function showShots(arr) { // shows shots field
     let total = 30;
     let toGo = 30;
+    let totalShots = 0;
     
     let shots = document.querySelector('#shotsHere');
     shots.innerHTML = '30/30';
@@ -101,7 +102,6 @@ function showShots(arr) { // shows shots field
                         for (let j=0; j<fieldArrayCoordinatesHelper[i].length; j++) {
                             if (fieldArrayCoordinatesHelper[i][j][0] === x && fieldArrayCoordinatesHelper[i][j][1] === y) {
                                 let element = document.querySelector('#' + CSS.escape(i) + '0' + CSS.escape(j));
-                                console.log(element);
                                 element.classList.add('bg-warning');
                             }
                         }
@@ -147,16 +147,18 @@ function showShots(arr) { // shows shots field
                 }
 
                 toGo--;
+                totalShots++;
 
                 let arraysLen = fieldArrayCoordinates.reduce((sum, current) => sum + current.length, 0);
-                let made = total - toGo;
-                console.log(made);
+
                 if (arraysLen === 0) { //win logic
-                    showResult(made);
+                    showResult(totalShots);
+                    document.querySelector('#winOrLose').innerHTML = 'You Won!'
                 }
 
                 if (toGo === 0) { //gameover logic
-                    showResult(made); 
+                    showResult(totalShots); 
+                    document.querySelector('#winOrLose').innerHTML = 'Game Over';
                 }
 
                 shots.innerHTML = toGo + '/' + total;
@@ -167,6 +169,10 @@ function showShots(arr) { // shows shots field
 
 function showResult(shots) {
     clearInterval(startTimer);
+    
+    let tableResult = document.querySelector('#records');
+    let finishTime = document.querySelector('#timeHere').innerHTML;
+    let player = document.querySelector('#playerNameHere').innerHTML;
 
     let firstDiv = document.body.firstElementChild;
     let secondDiv = firstDiv.nextElementSibling;
@@ -175,12 +181,8 @@ function showResult(shots) {
     secondDiv.classList.add('d-none');
     thirdDiv.classList.remove('d-none');
 
-    if (shots === 30) {
-        document.querySelector('#winOrLose').innerHTML = 'Game Over';
-    } else {
-        document.querySelector('#winOrLose').innerHTML = 'You Won!';
-    }
-}
+    tableResult.innerHTML = (player + ', ' + shots + ', ' + finishTime);
+};
 
 let displayShots = showShots(fieldArray);
 
