@@ -1,4 +1,5 @@
 import { fieldArray, fieldArrayCoordinates, fieldArrayCoordClosest, fieldArrayCoordinatesHelper } from './ships.js';
+import { addToLocalStorage, showRecordTable } from './localStorage.js';
 let startTimer;
 
 function createBatleField(range) { //first square creation
@@ -78,7 +79,7 @@ function showTime() { //game timer
 
 function showShots(arr) { // shows shots field
     let total = 30;
-    let toGo = 30;
+    let toGo = 2;
     let totalShots = 0;
     
     let shots = document.querySelector('#shotsHere');
@@ -152,13 +153,11 @@ function showShots(arr) { // shows shots field
                 let arraysLen = fieldArrayCoordinates.reduce((sum, current) => sum + current.length, 0);
 
                 if (arraysLen === 0) { //win logic
-                    showResult(totalShots);
-                    document.querySelector('#winOrLose').innerHTML = 'You Won!'
+                    showResultWin(totalShots);
                 }
 
                 if (toGo === 0) { //gameover logic
-                    showResult(totalShots); 
-                    document.querySelector('#winOrLose').innerHTML = 'Game Over';
+                    showResultLose(); 
                 }
 
                 shots.innerHTML = toGo + '/' + total;
@@ -167,10 +166,9 @@ function showShots(arr) { // shows shots field
     };
 };
 
-function showResult(shots) {
+function showResultWin(shots) {
     clearInterval(startTimer);
-    
-    let tableResult = document.querySelector('#records');
+ 
     let finishTime = document.querySelector('#timeHere').innerHTML;
     let player = document.querySelector('#playerNameHere').innerHTML;
 
@@ -181,9 +179,25 @@ function showResult(shots) {
     secondDiv.classList.add('d-none');
     thirdDiv.classList.remove('d-none');
 
-    tableResult.innerHTML = (player + ', ' + shots + ', ' + finishTime);
+    document.querySelector('#winOrLose').innerHTML = 'You Won!';
+
+    addToLocalStorage(player, shots, finishTime);
+};
+
+function showResultLose() {
+    clearInterval(startTimer);
+
+    let firstDiv = document.body.firstElementChild;
+    let secondDiv = firstDiv.nextElementSibling;
+    let thirdDiv = secondDiv.nextElementSibling;
+
+    secondDiv.classList.add('d-none');
+    thirdDiv.classList.remove('d-none');
+
+    document.querySelector('#winOrLose').innerHTML = 'Game Over';
+    showRecordTable();
 };
 
 let displayShots = showShots(fieldArray);
 
-export { createBatleField, showPlayerName, showTime, displayShots, showResult };
+export { createBatleField, showPlayerName, showTime, displayShots };
