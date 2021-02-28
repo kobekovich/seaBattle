@@ -160,7 +160,7 @@ function placeShip() {
             getRandom();
         }
     };
-console.log(fieldArray);
+    
     function getRandom() {
         if (shipArray.length > 0) {
             randomNumberFirstCell = Math.floor(Math.random()*99);

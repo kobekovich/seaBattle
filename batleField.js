@@ -79,7 +79,7 @@ function showTime() { //game timer
 
 function showShots(arr) { // shows shots field
     let total = 30;
-    let toGo = 5;
+    let toGo = 30;
     let totalShots = 0;
     
     let shots = document.querySelector('#shotsHere');
@@ -128,7 +128,6 @@ function showShots(arr) { // shows shots field
                                     }
 
                                     for (let r=0; r<fieldArrayCoordinatesHelper[i].length; r++) { //color as red
-                                        console.log(fieldArrayCoordinatesHelper[i]);
                                         let element = document.querySelector('#' + CSS.escape(10*fieldArrayCoordinatesHelper[i][r][0]
                                             +fieldArrayCoordinatesHelper[i][r][1]) + ' img');
                                         let elementPanel = document.querySelector('#' + CSS.escape(i) + '0' + CSS.escape(r));
