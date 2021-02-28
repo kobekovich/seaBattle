@@ -9,33 +9,43 @@ function addToLocalStorage(player, shots, finishTime) {
 function getResultArray() {
     let localStorageArray = [];
 
-    for (let key in localStorage) {
-        if (!localStorage.hasOwnProperty(key)) {
-            continue; 
-        }
-
-        let resString = localStorage.getItem(key) + ',';
-        
-        localStorageArray.push([]);
-
-        for (let i=0; i<3; i++) {
-            localStorageArray[localStorageArray.length-1].push(resString.slice(0, resString.indexOf(',')));
-            resString = resString.slice(resString.indexOf(',') + 1);
-        }
-    }
-
-    localStorageArray.sort((x,y) => {
-        if ((x[1] === y[1])) { //sort results by time;
-            if (x[2].slice(0,2) === y[2].slice(0,2)) {
-                return +x[2].slice(3) - +y[2].slice(3);
-            } else {
-                return +x[2].slice(0,2) - +y[2].slice(0,2)
+    if (localStorage.length !== 0 ) {
+        for (let key in localStorage) {
+            if (!localStorage.hasOwnProperty(key)) {
+                continue; 
             }
-        } else { //sort results by shots;
-            return +x[1] - +y[1]; 
+    
+            let resString = localStorage.getItem(key) + ',';
+            
+            localStorageArray.push([]);
+    
+            for (let i=0; i<3; i++) {
+                localStorageArray[localStorageArray.length-1].push(resString.slice(0, resString.indexOf(',')));
+                resString = resString.slice(resString.indexOf(',') + 1);
+            }
         }
-    }); 
-  
+    
+        localStorageArray.sort((x,y) => {
+            if ((x[1] === y[1])) { //sort results by time;
+                if (x[2].slice(0,2) === y[2].slice(0,2)) {
+                    return +x[2].slice(3) - +y[2].slice(3);
+                } else {
+                    return +x[2].slice(0,2) - +y[2].slice(0,2)
+                }
+            } else { //sort results by shots;
+                return +x[1] - +y[1]; 
+            }
+        }); 
+    }
+    
+    if (localStorage.length > 10 ) {
+        localStorageArray.pop(); //delete the worst result
+        localStorage.clear(); //clear localStorage
+        console.log(localStorage);
+
+        localStorageArray.forEach((item) => localStorage.setItem(localStorage.length, item)) 
+    }
+    
     showRecordTable(localStorageArray);
 };
 
@@ -49,6 +59,7 @@ function showRecordTable(arr) {
 
         arr[index].forEach((nestedItem) => {
             let td = document.createElement('td');
+            td.className = 'fs-4';
 
             td.innerHTML = nestedItem;
             document.querySelector('#tbodyHere tr:last-child').append(td);
