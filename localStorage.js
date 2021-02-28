@@ -10,7 +10,7 @@ function getResultArray() {
     let localStorageArray = [];
 
     if (localStorage.length !== 0 ) {
-        for (let key in localStorage) {
+        for (let key=0; key<localStorage.length; key++) {
             if (!localStorage.hasOwnProperty(key)) {
                 continue; 
             }
@@ -18,13 +18,14 @@ function getResultArray() {
             let resString = localStorage.getItem(key) + ',';
             
             localStorageArray.push([]);
-    
+              
             for (let i=0; i<3; i++) {
-                localStorageArray[localStorageArray.length-1].push(resString.slice(0, resString.indexOf(',')));
+                
+                localStorageArray[key].push(resString.slice(0, resString.indexOf(',')));
                 resString = resString.slice(resString.indexOf(',') + 1);
             }
         }
-    
+  
         localStorageArray.sort((x,y) => {
             if ((x[1] === y[1])) { //sort results by time;
                 if (x[2].slice(0,2) === y[2].slice(0,2)) {
@@ -37,7 +38,7 @@ function getResultArray() {
             }
         }); 
     }
-    
+   
     if (localStorage.length > 10 ) {
         localStorageArray.pop(); //delete the worst result
         localStorage.clear(); //clear localStorage
