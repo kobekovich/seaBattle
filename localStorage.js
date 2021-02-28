@@ -3,31 +3,57 @@ function addToLocalStorage(player, shots, finishTime) {
 
     localStorage.setItem(localStorage.length, resArray);
 
-    showRecordTable();
+    getResultArray();
 };
 
-function showRecordTable() {
-    for(let key in localStorage) {
+function getResultArray() {
+    let localStorageArray = [];
+
+    for (let key in localStorage) {
         if (!localStorage.hasOwnProperty(key)) {
-          continue; 
+            continue; 
         }
 
         let resString = localStorage.getItem(key) + ',';
-        let row = document.createElement('tr');
-        let tbody = document.querySelector('#tbodyHere');
-
-        tbody.append(row);
+        
+        localStorageArray.push([]);
 
         for (let i=0; i<3; i++) {
-            
-            let td = document.createElement('td');
-
-            td.innerHTML = resString.slice(0, resString.indexOf(','));
-            document.querySelector('#tbodyHere tr:last-child').append(td);
-
+            localStorageArray[localStorageArray.length-1].push(resString.slice(0, resString.indexOf(',')));
             resString = resString.slice(resString.indexOf(',') + 1);
         }
     }
+
+    localStorageArray.sort((x,y) => {
+        if ((x[1] === y[1])) { //sort results by time;
+            if (x[2].slice(0,2) === y[2].slice(0,2)) {
+                return +x[2].slice(3) - +y[2].slice(3);
+            } else {
+                return +x[2].slice(0,2) - +y[2].slice(0,2)
+            }
+        } else { //sort results by shots;
+            return +x[1] - +y[1]; 
+        }
+    }); 
+  
+    showRecordTable(localStorageArray);
 };
 
-export { addToLocalStorage, showRecordTable };
+function showRecordTable(arr) {
+
+    arr.forEach((item, index) => {
+        let row = document.createElement('tr');
+        let tbody = document.querySelector('#tbodyHere');
+        
+        tbody.append(row);
+
+        arr[index].forEach((nestedItem) => {
+            let td = document.createElement('td');
+
+            td.innerHTML = nestedItem;
+            document.querySelector('#tbodyHere tr:last-child').append(td);
+        });        
+    });
+};
+
+export { addToLocalStorage, showRecordTable, getResultArray };

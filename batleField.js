@@ -1,5 +1,5 @@
 import { fieldArray, fieldArrayCoordinates, fieldArrayCoordClosest, fieldArrayCoordinatesHelper } from './ships.js';
-import { addToLocalStorage, showRecordTable } from './localStorage.js';
+import { addToLocalStorage, getResultArray } from './localStorage.js';
 let startTimer;
 
 function createBatleField(range) { //first square creation
@@ -79,7 +79,7 @@ function showTime() { //game timer
 
 function showShots(arr) { // shows shots field
     let total = 30;
-    let toGo = 2;
+    let toGo = 5;
     let totalShots = 0;
     
     let shots = document.querySelector('#shotsHere');
@@ -195,7 +195,7 @@ function showResultLose() {
     thirdDiv.classList.remove('d-none');
 
     document.querySelector('#winOrLose').innerHTML = 'Game Over';
-    showRecordTable();
+    getResultArray();
 };
 
 let displayShots = showShots(fieldArray);
