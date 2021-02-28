@@ -41,7 +41,6 @@ function getResultArray() {
     if (localStorage.length > 10 ) {
         localStorageArray.pop(); //delete the worst result
         localStorage.clear(); //clear localStorage
-        console.log(localStorage);
 
         localStorageArray.forEach((item) => localStorage.setItem(localStorage.length, item)) 
     }
@@ -59,7 +58,7 @@ function showRecordTable(arr) {
 
         arr[index].forEach((nestedItem) => {
             let td = document.createElement('td');
-            td.className = 'fs-4';
+            td.className = 'fs-5';
 
             td.innerHTML = nestedItem;
             document.querySelector('#tbodyHere tr:last-child').append(td);
